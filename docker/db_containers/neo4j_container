@@ -1,0 +1,6 @@
+# reference: https://neo4j.com/developer/docker/
+# reference: https://hub.docker.com/_/neo4j
+FROM neo4j:latest
+
+WORKDIR $HOME/neo4j/data
+EXPOSE 7474 && 7687

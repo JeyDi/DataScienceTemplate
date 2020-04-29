@@ -1,0 +1,44 @@
+FROM rocker/rstudio:latest
+
+RUN apt-get update -qq && apt-get -y --no-install-recommends install \
+  libxml2-dev \
+  libcairo2-dev \
+  libsqlite3-dev \
+  libmariadbd-dev \
+  libmariadb-client-lgpl-dev \
+  libpq-dev \
+  libssh2-1-dev \
+  unixodbc-dev \
+  libsasl2-dev \
+  && install2.r --error \
+    --deps TRUE \
+    tidyverse \
+    dplyr \
+    devtools \
+    formatR \
+    remotes \
+    selectr \
+    caTools \
+    BiocManager
+
+#If you want to use your scripts
+#ARG WHEN
+
+#RUN mkdir /home/analysis
+
+#RUN R -e "options(repos = \
+#  list(CRAN = 'http://mran.revolutionanalytics.com/snapshot/${WHEN}')); \
+#  install.packages('tidystringdist')"
+
+#COPY myscript.R /home/analysis/myscript.R
+
+#CMD cd /home/analysis \
+#  && R -e "source('myscript.R')" \
+#  && mv /home/analysis/p.csv /home/results/p.csv
+
+#mkdir ~/mydocker/results 
+#docker run -v ~/mydocker/results:/home/results  analysis 
+
+# Configure access to 
+WORKDIR /home/rstudio/Documents
+EXPOSE 8787
